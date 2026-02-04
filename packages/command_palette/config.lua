@@ -42,6 +42,15 @@ Config.actions = {
             hs.osascript.applescript(script)
         end
     end,
+
+    --- Execute a shell command asynchronously.
+    --- @param cmd string Shell command to execute (supports variable expansion)
+    --- @return function Action function
+    shell = function(cmd)
+        return function()
+            hs.task.new("/bin/sh", nil, { "-l", "-c", cmd }):start()
+        end
+    end,
 }
 
 --- Command definitions.
@@ -148,6 +157,12 @@ Config.commands = {
         text = "Snap Window Bottom Right",
         action = function()
             window_manager.snap_window("bottom-right")
+        end,
+    },
+    {
+        text = "Alacritty: Open workspace",
+        action = function()
+            Config.actions.shell("/opt/homebrew/bin/alacritty msg create-window --working-directory $HOME/workspace")()
         end,
     },
 }

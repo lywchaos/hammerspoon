@@ -1,3 +1,22 @@
+<!-- OPENSPEC:START -->
+# OpenSpec Instructions
+
+These instructions are for AI assistants working in this project.
+
+Always open `@/openspec/AGENTS.md` when the request:
+- Mentions planning or proposals (words like proposal, spec, change, plan)
+- Introduces new capabilities, breaking changes, architecture shifts, or big performance/security work
+- Sounds ambiguous and you need the authoritative spec before coding
+
+Use `@/openspec/AGENTS.md` to learn:
+- How to create and apply change proposals
+- Spec format and conventions
+- Project structure and guidelines
+
+Keep this managed block so 'openspec update' can refresh the instructions.
+
+<!-- OPENSPEC:END -->
+
 # AGENTS.md
 
 About user script written in hammerspoon.
@@ -22,3 +41,4 @@ references:
 - `hs` is a global provided by Hammerspoon runtime - linter "undefined global" warnings for `hs` are expected and safe to ignore
 - Adding command palette items: edit `packages/command_palette/config.lua`, add `{ text = "Name", action = function() ... end }` to `Config.commands`
 - Window positioning: use `screen:frame()` (respects menu bar/dock) not `screen:fullFrame()`
+- Shell commands (`hs.task`, `hs.execute`): use full paths (e.g., `/opt/homebrew/bin/alacritty`) - Hammerspoon has minimal PATH, won't find executables in user's shell PATH
