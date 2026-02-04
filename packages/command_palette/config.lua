@@ -162,7 +162,14 @@ Config.commands = {
     {
         text = "Alacritty: Open workspace",
         action = function()
-            Config.actions.shell("/opt/homebrew/bin/alacritty msg create-window --working-directory $HOME/workspace")()
+            local alacritty = "/opt/homebrew/bin/alacritty"
+            local dir = os.getenv("HOME") .. "/workspace"
+            -- Try msg first; if it fails (no running instance), launch directly
+            hs.task.new(alacritty, function(exitCode)
+                if exitCode ~= 0 then
+                    hs.task.new(alacritty, nil, { "--working-directory", dir }):start()
+                end
+            end, { "msg", "create-window", "--working-directory", dir }):start()
         end,
     },
 }
