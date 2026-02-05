@@ -11,6 +11,12 @@ local CHINESE_APPS = {
     "Google Chrome",
 }
 
+-- Apps that should always use English input (code editors, terminals)
+local ENGLISH_APPS = {
+    "Zed",
+    "Alacritty",
+}
+
 -- Input method settings
 local CHINESE_INPUT_METHOD = "百度五笔"
 local ENGLISH_LAYOUT = "ABC"
@@ -18,11 +24,12 @@ local ENGLISH_LAYOUT = "ABC"
 -- State
 local watcher = nil
 
---- Check if app should use Chinese input
+--- Check if app name is in the given list
 --- @param app_name string
+--- @param app_list table
 --- @return boolean
-local function is_chinese_app(app_name)
-    for _, name in ipairs(CHINESE_APPS) do
+local function is_in_list(app_name, app_list)
+    for _, name in ipairs(app_list) do
         if app_name == name then
             return true
         end
@@ -31,6 +38,7 @@ local function is_chinese_app(app_name)
 end
 
 --- Handle focus change - switch input method
+--- Priority: Chinese apps > English apps > default (English)
 local function on_focus_change(new_window)
     if not new_window then
         return
@@ -39,7 +47,7 @@ local function on_focus_change(new_window)
     local app = new_window:application()
     local app_name = app and app:name() or "Unknown"
 
-    if is_chinese_app(app_name) then
+    if is_in_list(app_name, CHINESE_APPS) then
         hs.keycodes.setMethod(CHINESE_INPUT_METHOD)
     else
         hs.keycodes.setLayout(ENGLISH_LAYOUT)

@@ -3,7 +3,9 @@
     "allow": [
       "Bash(openspec validate:*)",
       "Bash(pgrep:*)",
-      "Bash(openspec archive add-alacritty-lyw-custom-command:*)"
+      "Bash(openspec archive add-alacritty-lyw-custom-command:*)",
+      "Bash(openspec list:*)",
+      "Bash(openspec archive add-zed-commands:*)"
     ]
   }
 }

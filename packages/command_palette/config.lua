@@ -90,6 +90,14 @@ Config.commands = {
         end,
     },
     {
+        text = "Zed: Toggle Terminal",
+        app = "Zed",
+        action = function()
+            Config.actions.keystroke({ "ctrl" }, "`")()
+            notify_action_done("Zed: Toggle Terminal")
+        end,
+    },
+    {
         text = "Music Next",
         action = function()
             Config.actions.osascript("tell application \"Music\" to next track")()
