@@ -74,30 +74,6 @@ Config.commands = {
         end,
     },
     {
-        text = "Cursor: Search Word",
-        app = "Cursor",
-        action = function()
-            Config.actions.sequence({ "\\", "\\", "2", "s" })()
-            notify_action_done("Cursor: Search Word")
-        end,
-    },
-    {
-        text = "Cursor: Toggle Terminal",
-        app = "Cursor",
-        action = function()
-            Config.actions.keystroke({ "ctrl" }, "`")()
-            notify_action_done("Cursor: Toggle Terminal")
-        end,
-    },
-    {
-        text = "Zed: Toggle Terminal",
-        app = "Zed",
-        action = function()
-            Config.actions.keystroke({ "ctrl" }, "`")()
-            notify_action_done("Zed: Toggle Terminal")
-        end,
-    },
-    {
         text = "Music Next",
         action = function()
             Config.actions.osascript("tell application \"Music\" to next track")()
