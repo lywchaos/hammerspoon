@@ -4,17 +4,18 @@ local M = {}
 
 -- Apps that should use Chinese input method (百度五笔)
 local CHINESE_APPS = {
-    "微信",
-    "豆包",
-    "飞书",
-    "Obsidian",
-    "Google Chrome",
+	"微信",
+	"豆包",
+	"飞书",
+	"Obsidian",
+	"Google Chrome",
 }
 
 -- Apps that should always use English input (code editors, terminals)
 local ENGLISH_APPS = {
-    "Zed",
-    "Alacritty",
+	"Zed",
+	"Alacritty",
+	"Ghostty",
 }
 
 -- Input method settings
@@ -29,35 +30,35 @@ local watcher = nil
 --- @param app_list table
 --- @return boolean
 local function is_in_list(app_name, app_list)
-    for _, name in ipairs(app_list) do
-        if app_name == name then
-            return true
-        end
-    end
-    return false
+	for _, name in ipairs(app_list) do
+		if app_name == name then
+			return true
+		end
+	end
+	return false
 end
 
 --- Handle focus change - switch input method
 --- Priority: Chinese apps > English apps > default (English)
 local function on_focus_change(new_window)
-    if not new_window then
-        return
-    end
+	if not new_window then
+		return
+	end
 
-    local app = new_window:application()
-    local app_name = app and app:name() or "Unknown"
+	local app = new_window:application()
+	local app_name = app and app:name() or "Unknown"
 
-    if is_in_list(app_name, CHINESE_APPS) then
-        hs.keycodes.setMethod(CHINESE_INPUT_METHOD)
-    else
-        hs.keycodes.setLayout(ENGLISH_LAYOUT)
-    end
+	if is_in_list(app_name, CHINESE_APPS) then
+		hs.keycodes.setMethod(CHINESE_INPUT_METHOD)
+	else
+		hs.keycodes.setLayout(ENGLISH_LAYOUT)
+	end
 end
 
 --- Start the input switcher (called on module load)
 local function start()
-    watcher = hs.window.filter.new()
-    watcher:subscribe(hs.window.filter.windowFocused, on_focus_change)
+	watcher = hs.window.filter.new()
+	watcher:subscribe(hs.window.filter.windowFocused, on_focus_change)
 end
 
 -- Auto-start on require
